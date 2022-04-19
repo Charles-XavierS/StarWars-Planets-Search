@@ -4,7 +4,7 @@ import Context from '../Providers/Context';
 import PlanetsInfo from './PlanetsInfo';
 
 function Table() {
-  const { data } = useContext(Context);
+  const { data, filterName } = useContext(Context);
 
   return (
 
@@ -31,9 +31,11 @@ function Table() {
         </thead>
 
         <tbody>
-          {data.map((planet) => (
-            <PlanetsInfo key={ planet.name } planet={ planet } />
-          ))}
+          {data.filter((planet) => planet.name
+            .toLowerCase().includes(filterName.name.toLowerCase()))
+            .map((planet) => (
+              <PlanetsInfo key={ planet.url } planet={ planet } />
+            ))}
         </tbody>
 
       </table>

@@ -6,6 +6,7 @@ import Context from './Context';
 
 function Provider({ children }) {
   const [data, setData] = useState([]);
+  const [filterName, setFilterName] = useState({ name: '' });
 
   async function planetsApi() {
     const { results } = await fetchAPI();
@@ -18,6 +19,8 @@ function Provider({ children }) {
 
   const value = {
     data,
+    filterName,
+    setFilterName,
   };
 
   return (
