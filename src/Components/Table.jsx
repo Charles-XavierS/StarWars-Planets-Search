@@ -4,7 +4,27 @@ import Context from '../Providers/Context';
 import PlanetsInfo from './PlanetsInfo';
 
 function Table() {
-  const { data, filterName } = useContext(Context);
+  const { data, filterName, filterNumber } = useContext(Context);
+
+  const filterByNumber = () => {
+    let filteredData = data;
+    filterNumber.forEach((info) => {
+      const { column, comparison, value } = info;
+      filteredData = filteredData.filter((planet) => {
+        if (comparison === 'maior que') {
+          return Number(planet[column]) > Number(value);
+        }
+        if (comparison === 'menor que') {
+          return Number(planet[column]) < Number(value);
+        }
+        if (comparison === 'igual a') {
+          return Number(planet[column]) === Number(value);
+        }
+        return filteredData;
+      });
+    });
+    return filteredData;
+  };
 
   return (
 
@@ -31,11 +51,11 @@ function Table() {
         </thead>
 
         <tbody>
-          {data.filter((planet) => planet.name
+          {data ? filterByNumber().filter((planet) => planet.name
             .toLowerCase().includes(filterName.name.toLowerCase()))
             .map((planet) => (
-              <PlanetsInfo key={ planet.url } planet={ planet } />
-            ))}
+              <PlanetsInfo key={ planet.name } planet={ planet } />
+            )) : ''}
         </tbody>
 
       </table>

@@ -7,6 +7,10 @@ import Context from './Context';
 function Provider({ children }) {
   const [data, setData] = useState([]);
   const [filterName, setFilterName] = useState({ name: '' });
+  const [column, setColumn] = useState('population');
+  const [comparison, setComparison] = useState('maior que');
+  const [value, setValue] = useState(0);
+  const [filterNumber, setFilterNumber] = useState([]);
 
   async function planetsApi() {
     const { results } = await fetchAPI();
@@ -17,14 +21,22 @@ function Provider({ children }) {
     planetsApi();
   }, []);
 
-  const value = {
+  const valueContext = {
     data,
     filterName,
     setFilterName,
+    column,
+    setColumn,
+    comparison,
+    setComparison,
+    value,
+    setValue,
+    filterNumber,
+    setFilterNumber,
   };
 
   return (
-    <Context.Provider value={ value }>
+    <Context.Provider value={ valueContext }>
       { children }
     </Context.Provider>
   );
