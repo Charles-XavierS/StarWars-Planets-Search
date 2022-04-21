@@ -19,6 +19,16 @@ function InputsFilters() {
     setFilterNumber(newNumberFilter);
   };
 
+  const filterForColumn = () => {
+    let columnOptions = optionsColumn;
+    filterNumber.forEach((filter) => {
+      columnOptions = columnOptions
+        .filter((planet) => planet !== filter.column);
+      return columnOptions;
+    });
+    return columnOptions;
+  };
+
   return (
     <section className="inputs-filters">
 
@@ -39,7 +49,7 @@ function InputsFilters() {
               value={ column }
               onChange={ ({ target }) => setColumn(target.value) }
             >
-              {optionsColumn.map((option) => (
+              {filterForColumn().map((option) => (
                 <option key={ option } value={ option }>
                   {option}
                 </option>
